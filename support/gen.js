@@ -18,10 +18,10 @@ for (i = 0; i < 1001; i++) {
 		r += (f + pad).substr(0, 15);
 		r += (l + pad).substr(0, 15);
 		r += ((Math.random() * 1000000000 | 0) + pad).substr(0, 9);
-		r += ((Math.random() * 100000 | 0) + " " + s + pad).substr(0, 54);
+		r += ((Math.random() * 100000 | 0) + " " + s + pad).substr(0, 53);
 
 		console.log(r);
 
 	}
-	console.log(Array(97).join(" "));
+	console.log(Array(96).join(" "));
 }

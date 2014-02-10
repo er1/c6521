@@ -1,15 +1,22 @@
 
 import java.util.Arrays;
 
-
 public class Block {
 
     static final int BLOCK_SIZE = 4096;
     static final int TUPLE_SIZE = 100;
     static final int TUPLES_PER_BLOCK = 40;
 
-    byte[] blockdata = new byte[BLOCK_SIZE];
+    byte[] blockdata;
     int index = 0;
+
+    public Block() {
+        blockdata = new byte[BLOCK_SIZE];
+    }
+
+    public Block(byte[] data) {
+        blockdata = data;
+    }
 
     public void reset() {
         index = 0;
@@ -43,5 +50,9 @@ public class Block {
         while (hasNext()) {
             putTupleData(tuples[i++].toByteArray());
         }
+    }
+
+    byte[] getBlockData() {
+        return blockdata;
     }
 }
