@@ -23,5 +23,5 @@ for (i = 0; i < 1001; i++) {
 		console.log(r);
 
 	}
-	console.log(Array(96).join(" "));
+	console.log(Array(96).join("=PAD=").substr(0,95));
 }
