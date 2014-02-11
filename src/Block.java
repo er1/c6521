@@ -41,13 +41,13 @@ public class Block {
         Tuple[] tuples = new Tuple[TUPLES_PER_BLOCK];
         reset();
         int i = 0;
-        while (hasNext()) {
+        while (hasNext() && i < tuples.length) {
             tuples[i++] = new Tuple(getTupleData());
         }
         Arrays.sort(tuples);
         reset();
         i = 0;
-        while (hasNext()) {
+        while (hasNext() && i < tuples.length) {
             putTupleData(tuples[i++].toByteArray());
         }
     }

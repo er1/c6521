@@ -13,8 +13,8 @@ public class Tuple implements Comparable<Tuple> {
 
     @Override
     public int compareTo(Tuple t) {
-        int thiskey = 0;
-        int thatkey = 0;
+        int thiskey = Integer.MAX_VALUE;
+        int thatkey = Integer.MAX_VALUE;
 
         try {
             thiskey = Integer.parseInt(new String(data, 0, 7).trim());
