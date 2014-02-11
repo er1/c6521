@@ -19,13 +19,19 @@ public class C6521test {
             System.out.println("File opened with " + Integer.toString(count) + " blocks");
 
             System.out.println("Sorting Blocks");
-            Block b;
+            Block b = new Block();
             for (int i = 0; i < count; i++) {
-                b = ba.read(i);
+                ba.read(i, b);
                 b.sort();
                 ba.write(i, b);
                 System.out.print(".");
             }
+            
+            System.out.println("Sorting Runs");
+            
+            BlockMerge bm = new BlockMerge(ba, 10);
+            bm.sort();
+            
             System.out.println(" Done!");
 
         } catch (IOException ex) {

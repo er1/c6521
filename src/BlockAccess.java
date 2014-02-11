@@ -13,11 +13,10 @@ public class BlockAccess {
         fc = FileChannel.open(file, StandardOpenOption.READ, StandardOpenOption.WRITE);
     }
 
-    public Block read(int n) throws IOException {
-        byte[] data = new byte[Block.BLOCK_SIZE];
+    public void read(int n, Block b) throws IOException {
+        byte[] data = b.getBlockData();
         ByteBuffer buf = ByteBuffer.wrap(data);
         fc.read(buf, n * Block.BLOCK_SIZE);
-        return new Block(data);
     }
 
     public void write(int n, Block b) throws IOException {

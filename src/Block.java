@@ -12,10 +12,10 @@ public class Block {
 
     public Block() {
         blockdata = new byte[BLOCK_SIZE];
-    }
-
-    public Block(byte[] data) {
-        blockdata = data;
+        
+        // pad the block with proper ascii and a newline for readability
+        Arrays.fill(blockdata, 4000, 4095, (byte)61);
+        blockdata[4095] = 10;
     }
 
     public void reset() {
@@ -35,6 +35,10 @@ public class Block {
     public void putTupleData(byte[] tupledata) {
         System.arraycopy(tupledata, 0, blockdata, index, TUPLE_SIZE);
         index += TUPLE_SIZE;
+    }
+
+    public Tuple currentTuple() {
+        return new Tuple(Arrays.copyOfRange(blockdata, index, index + TUPLE_SIZE));
     }
 
     public void sort() {
