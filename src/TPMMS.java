@@ -78,10 +78,13 @@ public class TPMMS {
         for (int i = 0; i < count; i++) {
             b.reset();
             ba.read(i, b);
-            Tuple t = new Tuple(b.getTupleData());
-            String key = new String(t.getKey()).trim();
+            Tuple t;
+            t = b.get(0);
+            String key1 = new String(t.getKey()).trim();
+            t = b.get(Block.TUPLES_PER_BLOCK - 1);
+            String key2 = new String(t.getKey()).trim();
 
-            ranges.write(Integer.toString(i + 1) + "\t" + key);
+            ranges.write(Integer.toString(i + 1) + "\t" + key1 + "\t" + key2);
             ranges.newLine();
         }
 

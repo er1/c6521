@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        System.out.println("freeMemory(): " + Long.toString(Runtime.getRuntime().freeMemory()));
+
         String filename = "sample1";
         int readBlocks = 10;
 
@@ -30,9 +32,12 @@ public class Main {
         }
 
         File file = new File(filename);
+        
         try {
             TPMMS.TPMMS(file, readBlocks);
         } catch (IOException ex) {
         }
+
+        System.out.println("freeMemory(): " + Long.toString(Runtime.getRuntime().freeMemory()));
     }
 }

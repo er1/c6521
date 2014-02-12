@@ -15,8 +15,10 @@ public class Block extends AbstractList<Tuple> {
         blockdata = new byte[BLOCK_SIZE];
 
         // pad the block with proper ascii and a newline for readability
-        Arrays.fill(blockdata, TUPLE_SIZE * TUPLES_PER_BLOCK, BLOCK_SIZE - 1, (byte) 61);
-        blockdata[BLOCK_SIZE - 1] = 10;
+        if (BLOCK_SIZE > TUPLE_SIZE * TUPLES_PER_BLOCK) {
+            Arrays.fill(blockdata, TUPLE_SIZE * TUPLES_PER_BLOCK, BLOCK_SIZE - 1, (byte) 61);
+            blockdata[BLOCK_SIZE - 1] = 10;
+        }
     }
 
     public void reset() {
