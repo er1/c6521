@@ -1,5 +1,9 @@
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -56,6 +60,8 @@ public class TPMMS {
 
         }
 
+        Files.delete(tempfile);
+
         System.out.println("Done!");
         System.out.println("Total IO:");
         System.out.println("  Read:  " + Integer.toString(BlockAccess.readcount));
@@ -65,6 +71,11 @@ public class TPMMS {
 
         String rangefilename = file.toString() + ".ranges.txt";
         Path rangefile = Paths.get(rangefilename);
+        try {
+            Files.delete(rangefile);
+        } catch (NoSuchFileException e) {
+        }
+        BufferedWriter ranges = Files.newBufferedWriter(rangefile, Charset.defaultCharset());
 
         Block b = new Block();
         for (int i = 0; i < count; i++) {
@@ -73,8 +84,11 @@ public class TPMMS {
             Tuple t = new Tuple(b.getTupleData());
             String key = new String(t.getKey()).trim();
 
-            System.out.println(Integer.toString(i + 1) + "\t" + key);
+            ranges.write(Integer.toString(i + 1) + "\t" + key);
+            ranges.newLine();
         }
+
+        ranges.close();
 
         System.out.println("Done!");
     }
