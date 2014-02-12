@@ -16,7 +16,7 @@ public class BlockAccess {
     public void read(int n, Block b) throws IOException {
         byte[] data = b.getMutableBlockData();
         fc.seek(n * Block.BLOCK_SIZE);
-        fc.read(data);
+        fc.readFully(data);
         readcount++;
     }
 
