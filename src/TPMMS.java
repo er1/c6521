@@ -1,22 +1,19 @@
 
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.NoSuchFileException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class TPMMS {
 
-    public static void TPMMS(Path file, int initialRun) throws IOException {
+    public static void TPMMS(File file, int initialRun) throws IOException {
         String tempfilename = file.toString() + ".sortswap";
 
-        System.out.println("Opening file " + file.toString());
-        Path tempfile = Paths.get(tempfilename);
-        tempfile.toFile().createNewFile();
+        System.out.println("Opening file " + file.getPath());
+        File tempfile = new File(tempfilename);
+        tempfile.createNewFile();
 
-        System.out.println(file.toAbsolutePath());
+        System.out.println(file.getPath());
         BlockAccess ba = new BlockAccess(file);
         BlockAccess batmp = new BlockAccess(tempfile);
 
@@ -60,7 +57,7 @@ public class TPMMS {
 
         }
 
-        Files.delete(tempfile);
+        tempfile.delete();
 
         System.out.println("Done!");
         System.out.println("Total IO:");
@@ -70,12 +67,12 @@ public class TPMMS {
         System.out.println("Generating Range Table...");
 
         String rangefilename = file.toString() + ".ranges.txt";
-        Path rangefile = Paths.get(rangefilename);
-        try {
-            Files.delete(rangefile);
-        } catch (NoSuchFileException e) {
-        }
-        BufferedWriter ranges = Files.newBufferedWriter(rangefile, Charset.defaultCharset());
+        File rangefile = new File(rangefilename);
+        rangefile.delete();
+
+        BufferedWriter ranges;
+
+        ranges = new BufferedWriter(new FileWriter(rangefile));
 
         Block b = new Block();
         for (int i = 0; i < count; i++) {

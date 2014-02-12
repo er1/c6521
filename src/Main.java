@@ -1,7 +1,6 @@
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Main {
@@ -30,12 +29,10 @@ public class Main {
         } catch (NumberFormatException e) {
         }
 
-        Path file = Paths.get(filename);
-
+        File file = new File(filename);
         try {
-            TPMMS.TPMMS(file, 10);
+            TPMMS.TPMMS(file, readBlocks);
         } catch (IOException ex) {
-            System.err.println(ex);
         }
     }
 }

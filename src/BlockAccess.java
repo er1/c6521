@@ -1,41 +1,36 @@
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
+import java.io.RandomAccessFile;
 
 public class BlockAccess {
 
     public static int readcount = 0;
     public static int writecount = 0;
+    RandomAccessFile fc;
 
-    FileChannel fc;
-
-    public BlockAccess(Path file) throws IOException {
-        fc = FileChannel.open(file, StandardOpenOption.READ, StandardOpenOption.WRITE);
+    public BlockAccess(File file) throws IOException {
+        fc = new RandomAccessFile(file, "rw");
     }
 
     public void read(int n, Block b) throws IOException {
         byte[] data = b.getMutableBlockData();
-        ByteBuffer buf = ByteBuffer.wrap(data);
-        fc.read(buf, n * Block.BLOCK_SIZE);
-
+        fc.seek(n * Block.BLOCK_SIZE);
+        fc.read(data);
         readcount++;
     }
 
     public void write(int n, Block b) throws IOException {
         byte[] data = b.getMutableBlockData();
-        ByteBuffer buf = ByteBuffer.wrap(data);
-        fc.write(buf, n * Block.BLOCK_SIZE);
-
+        fc.seek(n * Block.BLOCK_SIZE);
+        fc.write(data);
         writecount++;
     }
 
     int getBlockCount() {
         int blockcount = 0;
         try {
-            blockcount = (int) (fc.size() / Block.BLOCK_SIZE);
+            blockcount = (int) (fc.length() / Block.BLOCK_SIZE);
         } catch (IOException ex) {
         }
         return blockcount;
