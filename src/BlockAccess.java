@@ -7,6 +7,9 @@ import java.nio.file.StandardOpenOption;
 
 public class BlockAccess {
 
+    public static int readcount = 0;
+    public static int writecount = 0;
+
     FileChannel fc;
 
     public BlockAccess(Path file) throws IOException {
@@ -17,18 +20,16 @@ public class BlockAccess {
         byte[] data = b.getMutableBlockData();
         ByteBuffer buf = ByteBuffer.wrap(data);
         fc.read(buf, n * Block.BLOCK_SIZE);
+
+        readcount++;
     }
 
     public void write(int n, Block b) throws IOException {
         byte[] data = b.getMutableBlockData();
-        
-        // debug code
-        
-        String s = " ^^^ " + Integer.toString(n) + " ^^^ ";
-        System.arraycopy(s.getBytes(), 0, data, 4000, s.length());
-        
         ByteBuffer buf = ByteBuffer.wrap(data);
         fc.write(buf, n * Block.BLOCK_SIZE);
+
+        writecount++;
     }
 
     int getBlockCount() {

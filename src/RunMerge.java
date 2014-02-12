@@ -4,9 +4,6 @@ import java.io.IOException;
 public class RunMerge {
 
     public static void merge(int runLength, BlockAccess source, BlockAccess dest) throws IOException {
-
-        System.out.println("Merge runs of length " + Integer.toString(runLength) + " into runs of length " + Integer.toString(runLength * 2));
-
         int blockCount = source.getBlockCount();
         int runs = (blockCount + runLength * 2 - 1) / (runLength * 2);
 
@@ -19,8 +16,6 @@ public class RunMerge {
             int rightIndex = Math.min(start + runLength, blockCount);
             int leftEnd = rightIndex;
             int rightEnd = end;
-
-            System.out.println("  ->" + Integer.toString(start) + ", " + Integer.toString(rightIndex) + ", " + Integer.toString(end));
 
             int outIndex = start;
 
