@@ -14,13 +14,19 @@ public class BlockAccess {
     }
 
     public void read(int n, Block b) throws IOException {
-        byte[] data = b.getBlockData();
+        byte[] data = b.getMutableBlockData();
         ByteBuffer buf = ByteBuffer.wrap(data);
         fc.read(buf, n * Block.BLOCK_SIZE);
     }
 
     public void write(int n, Block b) throws IOException {
-        byte[] data = b.getBlockData();
+        byte[] data = b.getMutableBlockData();
+        
+        // debug code
+        
+        String s = " ^^^ " + Integer.toString(n) + " ^^^ ";
+        System.arraycopy(s.getBytes(), 0, data, 4000, s.length());
+        
         ByteBuffer buf = ByteBuffer.wrap(data);
         fc.write(buf, n * Block.BLOCK_SIZE);
     }
